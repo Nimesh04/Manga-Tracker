@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Manga Tracker </title> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <header>Manga-Tracker</header>
+        <div class="MangaList">
+            <h1>Nano-machine</h1>
+            <h2>My manga list</h2>
+            <hr>
+            <div class="mangaCarasouel">
+                <div class="mangacarasouelList">
+                    <ul class="listItems">
+                        {% for chapter, date in manga_updates %}
+                        <li class="mangaItems">{{ chapter }} - {{ date }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+    </body>
+</html>

@@ -81,14 +81,34 @@ header{
 
 }
 
-.box .boxItem{
+.boxItem {
+    position: relative;
     width: 215px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: rgb(34, 32, 29);
+    height: 300px; /* Adjust the height as needed */
     margin: 15px;
     border-radius: 36px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-color: rgb(34, 32, 29);
+}
+
+.boxItem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 36px;
+}
+
+.boxItem p {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 5px;
 }
 
 
@@ -110,4 +130,21 @@ header{
     border-radius: 16px;
     color: white;
     background-color: #D820DC;
+}
+
+.addManga{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.addManga .mangaItems{
+    display: flex;
+    align-items: center;
+
+}
+
+.addManga .addMangaSpan{
+    margin: 0Px 25px;
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Manga Tracker </title> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <header>Manga-Tracker</header>
+        <div class="addManga">
+            <form action="/add-manga" method="POST">
+                <div class="mangaItems">
+                    <h4>Manga Name</h4>
+                    <span class="addMangaSpan"><input class="addMangaBar" type="text" name="manga_name" required></span>
+                </div>
+                <div class="mangaItems">
+                    <h4>Manga Link</h4>
+                    <span class="addMangaSpan"><input class="addMangaBar" type="url" name="manga_link" required></span>
+                </div>
+                <button class="mangaAdd" type="submit">Add</button>
+            </form>
+        </div>
+    </body>
+</html>
