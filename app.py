@@ -1,10 +1,13 @@
 from flask import Flask, render_template, url_for, request, redirect
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+from pytz import timezone
 from bs4 import BeautifulSoup
 import sqlite3
 import requests
 
 app = Flask(__name__)
-
+cst = timezone('America/Chicago')
 # creates the database table to store the updates on the chapter of manga
 def init_db():
     with sqlite3.connect('manga_list.db') as conn:
@@ -40,7 +43,6 @@ def home():
         cursor = conn.cursor()
         cursor.execute('SELECT manga_name, image_link FROM manga_list')
         manga_lists = cursor.fetchall()
-    print(f"Fetched manga updates: {manga_lists}")
     return render_template("index.html", manga_lists=manga_lists)
 
 @app.route('/add-manga', methods=['GET', 'POST'])
@@ -136,7 +138,42 @@ def remove_manga():
 def manga_detail(manga_name):
     return nano(manga_name)
 
+
+@app.route('/search')
+def manga_search():
+    searched_name = request.args.get('query')
+    print("searched_name:", searched_name)
+    with sqlite3.connect('manga_list.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT manga_name FROM manga_list WHERE manga_name = ?', (searched_name,))
+        searched = cursor.fetchone()
+        if searched != None:
+            print(searched[0])
+            return redirect(url_for('manga_detail', manga_name = searched[0]))
+        else:
+            return print("Manga not found")
+
+#creating a function that would periodically run the scrape_manga function while retreving the names and links of the manga
+#from the manga_list database
+
+def periodic_scraper():
+    with sqlite3.connect('manga_list.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute(' SELECT manga_name, url_link FROM manga_list')
+        list = cursor.fetchall()
+    
+    for name, link in list:
+        scrape_manga(name, link)
+
+# Scheduler setup
+def setup_scheduler():
+    scheduler = BackgroundScheduler(timezone=cst)
+    scheduler.add_job(periodic_scraper, CronTrigger(hour=23, minute=0))
+    scheduler.start()
+
 if __name__ == "__main__":
     init_db()
-    app.debug(True)
-    app.run()
+    setup_scheduler()
+    app.run(debug=True)
+    
+    

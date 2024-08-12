@@ -12,9 +12,11 @@
 </head>
 <body>
     <header>Manga-Tracker</header>
-    <div class="search">    
-        <input class="searchItem" type="search" value="Search">
-        <input class="searchBar" type="submit" value="Search">
+    <div class="search"> 
+        <form action="/search" nethod="GET">
+            <input class="searchItem" type="search" name="query" placeholder="Search">
+            <input class="searchBar" type="submit" value="Search">
+        </form>   
     </div>
     <div class="backgroundBox">
         <form action="/add-manga">
