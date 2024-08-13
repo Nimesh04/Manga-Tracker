@@ -172,8 +172,7 @@ def setup_scheduler():
     scheduler.start()
 
 if __name__ == "__main__":
-    init_db()
     setup_scheduler()
-    app.run(debug=True)
+    app.run()
     
     
