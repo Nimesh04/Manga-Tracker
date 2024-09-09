@@ -44,7 +44,6 @@ def home():
         cursor = conn.cursor()
         cursor.execute('SELECT manga_name, image_link FROM manga_list')
         manga_lists = cursor.fetchall()
-        print('Manga List:', manga_lists)
     return render_template("index.html", manga_lists=manga_lists)
 
 @app.route('/add-manga', methods=['GET', 'POST'])
@@ -70,7 +69,6 @@ def nano(manga_name):
             manga_updates = cursor.fetchall()
         else:
             manga_updates = []
-    print("manga_updates:", manga_updates)
     return(render_template("manga_detail.html", manga_updates = manga_updates, manga_name=manga_name))
 
 #scrapes the chapter's name and data from a given url and stores them in the database
@@ -81,7 +79,7 @@ def scrape_manga(manga_name, manga_link_scrape):
     #scrape the html and find the div that contains the chapter lists
     soup = BeautifulSoup(r.content, 'html.parser')
     target_div = soup.find('div', {'class' : 'eplister', 'id': 'chapterlist'})
-    print(target_div)
+
 
     if target_div:
         chapters = []
@@ -148,7 +146,6 @@ def manga_detail(manga_name):
 @app.route('/search')
 def manga_search():
     searched_name = request.args.get('query')
-    print("searched_name:", searched_name)
     with sqlite3.connect('manga_list.db') as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT manga_name FROM manga_list WHERE manga_name = ?', (searched_name,))
