@@ -4,4 +4,3 @@ pytz
 requests
 beautifulsoup4
 gunicorn
-fcntl
