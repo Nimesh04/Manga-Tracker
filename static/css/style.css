@@ -1,3 +1,4 @@
+/* General Styles for the Body and Header */
 body{
     background-image: linear-gradient( 50deg, #302424, #063431 );
     color: white;
@@ -8,89 +9,139 @@ body{
   
 header{
     margin: 30px 20px 20px 20px;
-    font-size: 40px;
+    font-size: 2.5rem;
     text-align: center;
     font-family: "Irish Grover", system-ui;
     font-weight: 400;
     font-style: normal;
 }
 
-.search{
-    display:flex;
-    position: relative;
-    justify-content: center;
-    margin: 50px;
-    transform-origin: center bottom;
-    
-}
-
-.search .searchItem{
-    width: 1125px;
-    height: 71px;
-    color:rgb(19, 173, 175);
-    border-radius: 32px;
-    opacity: 0.5;
-    background-color:  #FBE9E9;
-    padding: 10px 50px;
-    font-size: 32px;
-    font-family: 'IBM Plex Serif', serif;
-    font-weight: 400;
-    font-style: normal;
-    text-align: center; 
-}
-
-
-.search .searchBar{
-    position: absolute;
-    width: 56px;
-    height: 56px;
-    border-radius: 360px;
-    top: 8.1px;
-    left: 1175px;
-    background-color: #09A6FF;
-    color: white;
-}
-
-.backgroundBox{
-    position: relative; 
-}
-
-.backgroundBox .mangaAdd{
-    position:absolute;
-    left: 10px;
-    width:34px;
-    height: 34px;
-    border-radius: 360px;
-    color: white;
-    background-color: #09A6FF;
-    font-size: 32px;
-    /* border: 0px; */
-    padding-top: 0px;
-    padding-bottom: 10px;
-}
-
-.box{
-    margin: 20px 10px;
-    padding: 10px;
-    height: 373px;
+/* Search Bar Styling */
+.search {
     display: flex;
-    border:12px;
-    background-color: #011C24;
-    border-radius: 55px;
-    /* box-shadow: 5px 8px #8F01FF; */
+    justify-content: center;
+    align-items: center;
+    width: 100%;  
+    margin: 50px auto;
+}
+.search form {
+    display: flex; 
+    width: 80%;     
+    justify-content: space-between; 
+}
 
+.search .searchItem {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 80%;  
+    height: 56px;
+    color: rgb(19, 173, 175);
+    border-radius: 32px;
+    opacity: 0.7;
+    background-color: #FBE9E9;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    font-family: 'IBM Plex Serif', serif;
+    text-align: center;
+    margin-right: 10px;  
+}
+
+.search .searchBar {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;  
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #09A6FF;
+    color: white;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Background Box for Manga Carousel */
+.backgroundBox{
+    position: relative;
+    width: 90%;
+    height: 300px;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.manga-carousel{
+    width: 100%;
+    position: relative;
+}
+
+.manga-carousel .mangaAdd{
+    position:absolute;
+    top: 5px;
+    left: 3%;
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    background-color: #09A6FF;
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.slider-container {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    margin-top: 25px; 
+}
+
+.box {
+    display: flex;
+    animation: slide-left 30s linear infinite;  
+    width: max-content; 
 }
 
 .boxItem {
-    position: relative;
-    width: 215px;
-    height: 300px; /* Adjust the height as needed */
-    margin: 15px;
-    border-radius: 36px;
-    overflow: hidden;
+    width: 180px;  
+    height: 230px;  
+    margin-right: 10px; 
     background-size: cover;
     background-position: center;
-    background-color: rgb(34, 32, 29);
+    position: relative;
+    border-radius: 25px;
+}
+
+.boxItem p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+
+/* Keyframes for continuous scrolling */
+@keyframes slide-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .boxItem img {
@@ -98,17 +149,6 @@ header{
     height: 100%;
     object-fit: cover;
     border-radius: 36px;
-}
-
-.boxItem p {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    color: white;
-    text-align: center;
-    margin: 0;
-    padding: 5px;
 }
 
 .box .removeButtonItem{
@@ -121,44 +161,141 @@ header{
     background-color: #D820DC;
 }
 
-.MangaList .mangaCarasouel{
+/* Style for Manga List */
+.MangaList {
+    padding: 40px;
+}
+
+.MangaList h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+
+.MangaList .mangaCarasouel {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
 }
 
-.MangaList .removeButton{
+.MangaList .mangacarasouelList {
+    flex: 1;
+}
+
+.MangaList .listItems {
+    padding: 0;
+    margin: 0;
+    list-style-type: decimal; 
+}
+
+.MangaList .mangaItems {
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc; 
+}
+
+.MangaList .mangaItems:last-child {
+    border-bottom: none; 
+}
+
+/* Link Styling */
+.MangaList .mangaItems a {
+    text-decoration: none; 
+    color: #09A6FF; 
+    transition: color 0.3s ease;
+}
+
+.MangaList .mangaItems a:hover {
+    color: #D820DC; 
+}
+
+.MangaList .mangaItems a:visited {
+    color: #7B68EE; 
+}
+
+.MangaList .mangaItems a:focus {
+    outline: none; 
+    color: #FF6347; 
+}
+
+/* Remove Button Styles */
+.MangaList .removeButton {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    justify-content: space-between;
+    margin-left: 20px;
 }
 
-.MangaList .removeButton .removeButtonItem{
-    margin-bottom: 2px;
-    border-radius: 16px;
-    color: white;
+.MangaList .removeButton .removeButtonItem {
     background-color: #D820DC;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.MangaList .mangaItems{
-    margin-bottom: 2px;
+.MangaList .removeButton .removeButtonItem:hover {
+    background-color: #09A6FF;
 }
 
-.addManga{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .search .searchItem {
+        width: 90%;
+        font-size: 1.2rem;
+    }
+
+    .backgroundBox {
+        width: 100%;
+        height: 250px;
+    }
+
+    .mangaAdd {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;
+    }
+
+    .boxItem {
+        width: 150px;
+        height: 200px;
+    }
+
+    header {
+        font-size: 2rem;
+    }
+
+    .boxItem p {
+        font-size: 0.9rem;
+    }
 }
 
-.addManga .mangaItems{
-    display: flex;
-    align-items: center;
-    margin-bottom: 2px;
+/* Tablet Responsive Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .search .searchItem {
+        width: 85%;
+    }
 
-}
+    .backgroundBox {
+        width: 95%;
+        height: 280px;
+    }
 
-.addManga .addMangaSpan{
-    margin: 0Px 25px;
+    .mangaAdd {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+
+    .boxItem {
+        width: 160px;
+        height: 220px;
+    }
 }

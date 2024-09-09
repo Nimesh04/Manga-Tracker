@@ -18,6 +18,7 @@ def init_db():
             CREATE TABLE IF NOT EXISTS manga_updates(
                 id INTEGER PRIMARY KEY,
                 chapter TEXT,
+                link TEXT,
                 date TEXT,
                 manga_id INTEGER,
                 FOREIGN KEY (manga_id) REFERENCES manga_list(id)
@@ -43,6 +44,7 @@ def home():
         cursor = conn.cursor()
         cursor.execute('SELECT manga_name, image_link FROM manga_list')
         manga_lists = cursor.fetchall()
+        print('Manga List:', manga_lists)
     return render_template("index.html", manga_lists=manga_lists)
 
 @app.route('/add-manga', methods=['GET', 'POST'])
@@ -64,11 +66,11 @@ def nano(manga_name):
         result = cursor.fetchone()
         if result:
             manga_id = result[0]
-            cursor.execute('SELECT chapter, date FROM manga_updates WHERE manga_id = ?', (manga_id,))
+            cursor.execute('SELECT chapter, date, link FROM manga_updates WHERE manga_id = ?', (manga_id,))
             manga_updates = cursor.fetchall()
         else:
             manga_updates = []
-
+    print("manga_updates:", manga_updates)
     return(render_template("manga_detail.html", manga_updates = manga_updates, manga_name=manga_name))
 
 #scrapes the chapter's name and data from a given url and stores them in the database
@@ -79,15 +81,16 @@ def scrape_manga(manga_name, manga_link_scrape):
     #scrape the html and find the div that contains the chapter lists
     soup = BeautifulSoup(r.content, 'html.parser')
     target_div = soup.find('div', {'class' : 'eplister', 'id': 'chapterlist'})
+    print(target_div)
 
     if target_div:
-        # Clean up the text
-        cleaned_text = target_div.text.strip().split('\n')
-        cleaned_text = [line.strip() for line in cleaned_text if line.strip()]
-
-        # Pair chapters and dates
-        cleaned_data = [(cleaned_text[i], cleaned_text[i + 1]) for i in range(0, len(cleaned_text), 2)]
-
+        chapters = []
+        for a_tag in target_div.find_all('a'):
+            chapter_number = a_tag.find('span', class_='chapternum').text.strip()
+            chapter_date = a_tag.find('span', class_='chapterdate').text.strip()
+            link = a_tag['href']
+            chapters.append((chapter_number, chapter_date, link))
+        
         # Update the database
         with sqlite3.connect('manga_list.db') as conn:
             cursor = conn.cursor()
@@ -95,11 +98,14 @@ def scrape_manga(manga_name, manga_link_scrape):
             result = cursor.fetchone()
             if result:
                 manga_id = result[0]
-                for chapter, date in cleaned_data:
-                    cursor.execute('''
-                        INSERT INTO manga_updates(chapter, date, manga_id)
-                        VALUES (?, ?, ?)
-                    ''', (chapter, date, manga_id))
+                for chapter, date, link in chapters:
+                    cursor.execute('SELECT 1 FROM manga_updates WHERE chapter = ? AND manga_id = ?', (chapter, manga_id))
+                    exists = cursor.fetchone()
+                    if not exists:
+                        cursor.execute('''
+                            INSERT INTO manga_updates(chapter, date, link, manga_id)
+                            VALUES (?, ?, ?, ?)
+                        ''', (chapter, date, link, manga_id))
                 conn.commit()
 
 
@@ -172,6 +178,7 @@ def setup_scheduler():
     scheduler.start()
 
 if __name__ == "__main__":
+    init_db()
     setup_scheduler()
     app.run()
     

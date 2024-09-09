@@ -16,13 +16,13 @@
         <header>Manga-Tracker</header>
         <div class="MangaList">
             <h1>{{ manga_name }}</h1>
-            <h2>My manga list</h2>
             <hr>
             <div class="mangaCarasouel">
                 <div class="mangacarasouelList">
                     <ul class="listItems">
-                        {% for chapter, date in manga_updates %}
-                        <li class="mangaItems">{{ chapter }} - {{ date }}</li>
+                        {% for chapter, date, link in manga_updates %}
+                        <li class="mangaItems">
+                        <a href="{{ link }}">{{ chapter }} </a>- {{ date }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>

@@ -13,36 +13,46 @@
 <body>
     <header>Manga-Tracker</header>
     <div class="search"> 
-        <form action="/search" nethod="GET">
+        <form action="/search" method="GET">
             <input class="searchItem" type="search" name="query" placeholder="Search">
             <input class="searchBar" type="submit" value="Search">
         </form>   
     </div>
-    <div class="backgroundBox">
+
+    <div class="manga-carousel">
         <form action="/add-manga">
             <button class="mangaAdd" type="submit">+</button>
         </form>
-        <div class="box">
-            {% if manga_lists %}
-                {% for manga_name, image_link in manga_lists %}
-                <div class="boxItem" style="background-image: url('{{ image_link }}');">
-                    <a href="{{ url_for('manga_detail', manga_name=manga_name )}}">
-                        <p>{{ manga_name }}</p>
-                    </a>
-                    <form action="/remove-manga" method="POST">
-                        <input type="hidden" name="manga_name" value="{{  manga_name }}">
-                        <button type="submit" class="removeButtonItem">Remove</button>
-                    </form>
+
+        <div class="slider-container">
+            <div class="backgroundBox">
+                <div class="slider-wrapper">
+                    <div class="box">
+                        {% if manga_lists %}
+                            {% for manga_name, image_link in manga_lists %}
+                                <div class="boxItem" style="background-image: url('{{ image_link }}');">
+                                    <a href="{{ url_for('manga_detail', manga_name=manga_name )}}">
+                                        <p>{{ manga_name }}</p>
+                                    </a>
+                                    <form action="/remove-manga" method="POST">
+                                        <input type="hidden" name="manga_name" value="{{  manga_name }}">
+                                        <button type="submit" class="removeButtonItem">Remove</button>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No manga available</p>
+                        {% endif %}
+                    </div>
                 </div>
-                {% endfor %}
-            {% else %}
-                <p>No manga available</p>
-            {% endif %}
+            </div>
         </div>
     </div>
+    
+
 
     <div class="MangaList">
-        <h2>My manga list</h2>
+        <h2>My Manga List</h2>
         <hr>
         <div class="mangaCarasouel">
             <div class="mangacarasouelList">
@@ -64,8 +74,7 @@
                 {% if manga_lists %}
                     {% for manga_name, _ in manga_lists %}
                     <form action="/remove-manga" method="POST">
-                        <!-- <p> This is the test {{ manga_name }}</p> -->
-                        <input type="hidden" name="manga_name" value="{{  manga_name }}">
+                        <input type="hidden" name="manga_name" value="{{ manga_name }}">
                         <button type="submit" class="removeButtonItem">Remove</button>
                     </form>
                     {% endfor %}
@@ -75,5 +84,7 @@
             </div>
         </div>
     </div>
+    
+    <!-- <script src="/static/css/js/script.js"></script> -->
 </body>
 </html>
