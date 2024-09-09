@@ -9,3 +9,6 @@ I created this first to have a tracker that I can use and second to learn flask.
 - Search the Mangas
 - Remove the Mangas
 - Scrapes the website to see if there is a new update on the chapter atleast once a day
+
+
+Website link: https://manga-tracker-cymu.onrender.com
