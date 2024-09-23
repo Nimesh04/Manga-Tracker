@@ -171,7 +171,7 @@ def periodic_scraper():
 # Scheduler setup
 def setup_scheduler():
     scheduler = BackgroundScheduler(timezone=cst)
-    scheduler.add_job(periodic_scraper, CronTrigger(hour=23, minute=0))
+    scheduler.add_job(periodic_scraper, CronTrigger(hour=13, minute=03))
     scheduler.start()
 
 if __name__ == "__main__":
