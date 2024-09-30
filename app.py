@@ -40,6 +40,7 @@ def init_db():
 @app.route('/')
 def home():
     init_db()
+    setup_scheduler()
     with sqlite3.connect('manga_list.db') as conn:
         cursor = conn.cursor()
         cursor.execute('SELECT manga_name, image_link FROM manga_list')
@@ -171,7 +172,7 @@ def periodic_scraper():
 # Scheduler setup
 def setup_scheduler():
     scheduler = BackgroundScheduler(timezone=cst)
-    scheduler.add_job(periodic_scraper, CronTrigger(hour=17, minute=45))
+    scheduler.add_job(periodic_scraper, CronTrigger(hour=17, minute=50))
     scheduler.start()
 
 if __name__ == "__main__":
